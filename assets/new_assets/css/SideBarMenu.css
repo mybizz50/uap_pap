@@ -1,0 +1,76 @@
+
+body{
+	padding:0px;
+	margin:0px;
+	height: auto !important;
+    min-height: 100%;
+    padding: 0;
+	font-family:"calibri", Garamond, 'Comic Sans';
+}
+#height{
+	height:600px; 
+}
+#table_stock_1{
+	
+	border-bottom:1px solid  #999;
+
+}
+#table_stock_2{
+	
+	border-bottom:1px solid  #CCC;;
+
+}
+#small_form{
+	width:70px;
+}
+#font_1{
+	color:#22262f;
+}
+#font_2{
+	color:#dbdbdb;
+}
+#cssmenu
+ {
+	width:263px;
+	background-color:#1b1e23;
+	color:white;
+}
+#cssmenu li {
+ 
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#cssmenu > ul > li > a > span {
+  display: block;
+}
+#cssmenu > ul > li.has-sub > a span {
+  background: url(../images/icon_plus.png) 96% center no-repeat;
+}
+#cssmenu a {
+  background: #1b1e23;
+  color: #ccc;
+  display: block;
+  margin: 0;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-weight: normal;
+}
+#cssmenu a:hover{
+	color:#FFF;
+	}
+
+
+
+
+#cssmenu ul li.hover,
+#cssmenu ul li:hover {position: relative; z-index: 599; cursor: default;}
+
+#cssmenu ul ul li {float: none;}
+#cssmenu ul ul ul {top: 0; left: auto; right: -70.5%; }
+
+
+#cssmenu ul ul {margin-top: 0; }
+
+
+

@@ -1,0 +1,95 @@
+#test1{
+	width: 250px;
+	height: 110px;
+	padding:10px;
+	overflow:hidden;
+	}
+#test2{
+	width: 250px;
+	height: 110px;
+	padding:10px;
+	overflow:hidden;
+	}
+#test3{
+	width: 250px;
+	height: 110px;
+	padding:10px;
+	overflow:hidden;
+	}
+	
+#quickPurchase{
+	width:250px;
+	height:110px;
+	background-color:#36F;
+	color:#FFF;
+	padding:10px;
+	font-size:20px;
+	text-decoration:none;
+	overflow:hidden;
+}
+#SubQuickPurchase{
+	width:250px;
+	height:110px;
+	background-color:#36F;
+	color:Black;
+	padding:10px;
+	font-size:20px;
+	text-decoration:none;
+}
+#quickStock{
+	width:250px;
+	height:110px;
+	background-color:#0aa699;
+	color:white;
+	padding:10px;
+	font-size:20px;
+	text-decoration:none;
+}
+#SubQuickStock{
+	width:250px;
+	height:110px;
+	background-color:#0aa699;
+	color:Black;
+	padding:10px;
+	font-size:20px;
+	text-decoration:none;
+}
+#quickReport{
+	width:250px;
+	height:110px;
+	background-color:#f35957;
+	color:#FFF;
+	padding:10px;
+	font-size:20px;
+	text-decoration:none;
+}
+#SubQuickReport{
+	width:250px;
+	height:110px;
+	background-color:#f35957;
+	color:Black;
+	padding:10px;
+	font-size:20px;
+	text-decoration:none;
+}
+#fontquick{
+	color:#75797c;
+	font-size:25px;
+}
+#subpurchase{
+	font-size:15px;
+	width:100px;
+	padding-top:10px;
+}
+#subStock{
+	font-size:15px;
+	width:100px;
+	padding-top:10px;
+}
+#subReport{
+	font-size:15px;
+	width:100px;
+	padding-top:10px;
+}
+
+

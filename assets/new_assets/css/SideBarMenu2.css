@@ -1,0 +1,58 @@
+
+#side_nav li ul {
+
+position: absolute;
+background: #22262f; 
+color: #333; 
+display: none; 
+padding:10px;
+width: 100px; 
+
+
+}
+#side_nav li ul li { 
+width: 100% 
+}
+#side_nav li ul li a { 
+background: none; 
+border: none; 
+margin: 0; 
+
+}
+#side_nav li ul li a:hover { 
+
+}
+
+/* A class of current will be added via jQuery */
+#side_nav li.current > a { background: #22262f; }
+
+/* CSS fallback */
+#side_nav li:hover > ul.child { display: block; }
+.triangle-isosceles {
+ 
+  padding:12px;
+  margin:1em 0 3em;
+}
+
+.triangle-isosceles.left {
+
+  margin-left:192px;
+  width:50px;
+   box-shadow: 2px 2px 5px black;
+ 
+}
+
+
+
+
+.triangle-isosceles.left:after {
+  top:16px; /* controls vertical position */
+  left:-10px; /* value = - border-left-width - border-right-width */
+  bottom:auto;
+  border-width:10px 10px 10px 0;
+  border-color:transparent #22262f;
+
+}
+
+
+

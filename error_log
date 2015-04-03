@@ -1,0 +1,48 @@
+[21-Dec-2013 01:18:05] PHP Fatal error:  Can't use function return value in write context in /home/wwwdream/public_html/uap/application/views/templates/login_form.php on line 5
+[21-Dec-2013 01:19:49] PHP Fatal error:  Call to undefined function  form_open() in /home/wwwdream/public_html/uap/application/views/templates/login_form.php on line 1
+[21-Dec-2013 01:20:46] PHP Fatal error:  Can't use function return value in write context in /home/wwwdream/public_html/uap/application/views/templates/login_form.php on line 5
+[21-Dec-2013 01:43:12] PHP Parse error:  syntax error, unexpected T_STRING, expecting ')' in /home/wwwdream/public_html/uap/application/config/autoload.php on line 76
+[21-Dec-2013 01:44:00] PHP Parse error:  syntax error, unexpected T_STRING, expecting ')' in /home/wwwdream/public_html/uap/application/config/autoload.php on line 76
+[21-Dec-2013 01:44:20] PHP Fatal error:  Can't use function return value in write context in /home/wwwdream/public_html/uap/application/views/templates/login_form.php on line 5
+[21-Dec-2013 15:41:44] PHP Fatal error:  Call to a member function get_role_option() on a non-object in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 45
+[21-Dec-2013 15:42:34] PHP Fatal error:  Call to a member function get_role_option() on a non-object in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 45
+[22-Dec-2013 03:18:47] PHP Fatal error:  Call to undefined function  get_role_option() in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 101
+[22-Dec-2013 05:46:19] PHP Fatal error:  Cannot redeclare Admin::edit_user() in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 129
+[22-Dec-2013 10:35:41] PHP Parse error:  syntax error, unexpected '}' in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 191
+[22-Dec-2013 11:13:00] PHP Fatal error:  Call to undefined method Users::update_department() in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 197
+[22-Dec-2013 11:40:05] PHP Parse error:  syntax error, unexpected $end, expecting T_FUNCTION in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 221
+[22-Dec-2013 12:29:58] PHP Fatal error:  Call to a member function add_role() on a non-object in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 236
+[23-Dec-2013 00:59:57] PHP Fatal error:  Call to undefined method Stock_category::add_role() in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 312
+[23-Dec-2013 02:32:29] PHP Fatal error:  Call to a member function change_status() on a non-object in /home/wwwdream/public_html/uap/application/controllers/admin.php on line 152
+[07-Jan-2014 09:26:53] PHP Fatal error:  Cannot redeclare class Purchase in /home/wwwdream/public_html/uap/application/models/purchase.php on line 33
+[07-Jan-2014 09:32:18] PHP Fatal error:  Cannot redeclare class Purchase in /home/wwwdream/public_html/uap/application/models/purchase.php on line 33
+[07-Jan-2014 10:00:42] PHP Fatal error:  Cannot use [] for reading in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 20
+[07-Jan-2014 10:03:52] PHP Fatal error:  Call to undefined method Purchase_model::getDeptName() in /home/wwwdream/public_html/uap/application/controllers/purchase.php on line 41
+[07-Jan-2014 11:21:48] PHP Fatal error:  Call to undefined method CI_DB_mysql_result::where() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 34
+[07-Jan-2014 11:24:24] PHP Fatal error:  Call to undefined method CI_DB_mysql_result::where() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 13
+[07-Jan-2014 11:26:27] PHP Fatal error:  Call to undefined method CI_DB_mysql_driver::getWhere() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 34
+[25-Jan-2014 03:28:37] PHP Fatal error:  Call to undefined method CI_Upload::upload_files() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 63
+[25-Jan-2014 21:43:35] PHP Fatal error:  Cannot redeclare Purchase::notifications() in /home/wwwdream/public_html/uap/application/controllers/purchase.php on line 99
+[25-Jan-2014 21:43:59] PHP Fatal error:  Cannot redeclare Purchase::notifications() in /home/wwwdream/public_html/uap/application/controllers/purchase.php on line 99
+[25-Jan-2014 21:50:34] PHP Fatal error:  Call to a member function count_notification() on a non-object in /home/wwwdream/public_html/uap/application/controllers/purchase.php on line 108
+[25-Jan-2014 21:50:40] PHP Fatal error:  Call to a member function count_notification() on a non-object in /home/wwwdream/public_html/uap/application/controllers/purchase.php on line 108
+[26-Jan-2014 12:35:59] PHP Parse error:  syntax error, unexpected '}' in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 160
+[26-Jan-2014 12:37:19] PHP Parse error:  syntax error, unexpected '}' in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 160
+[26-Jan-2014 13:11:21] PHP Fatal error:  Call to undefined function  get_purchase_id_from_notification_id() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 312
+[27-Jan-2014 01:22:42] PHP Fatal error:  Cannot redeclare Purchase_model::get_purchase_details() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 346
+[27-Jan-2014 01:22:45] PHP Fatal error:  Cannot redeclare Purchase_model::get_purchase_details() in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 346
+[07-Feb-2014 06:48:04] PHP Fatal error:  Cannot use object of type CI_DB_mysql_result as array in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 506
+[07-Feb-2014 06:48:49] PHP Fatal error:  Cannot use object of type CI_DB_mysql_result as array in /home/wwwdream/public_html/uap/application/models/purchase_model.php on line 506
+[07-Feb-2014 13:00:52] PHP Fatal error:  Call to a member function get_purchase_details() on a non-object in /home/wwwdream/public_html/uap/application/controllers/stock.php on line 116
+[07-Feb-2014 13:01:27] PHP Fatal error:  Call to undefined function  get_where() in /home/wwwdream/public_html/uap/application/models/stock_category.php on line 26
+[07-Feb-2014 13:07:16] PHP Fatal error:  Call to undefined function  get_where() in /home/wwwdream/public_html/uap/application/models/stock_category.php on line 26
+[07-Feb-2014 13:11:28] PHP Fatal error:  Call to undefined method Department::get_category_details() in /home/wwwdream/public_html/uap/application/controllers/stock.php on line 110
+[07-Feb-2014 13:11:33] PHP Fatal error:  Call to undefined method Department::get_category_details() in /home/wwwdream/public_html/uap/application/controllers/stock.php on line 110
+[16-Feb-2014 12:20:26] PHP Fatal error:  Call to undefined method Distribution::get_stock_name() in /home/wwwdream/public_html/uap/application/controllers/distribution.php on line 108
+[16-Feb-2014 12:21:58] PHP Fatal error:  Call to undefined method Purchase_model::get_stock_details() in /home/wwwdream/public_html/uap/application/controllers/distribution.php on line 141
+[16-Feb-2014 12:22:33] PHP Fatal error:  Call to undefined method Purchase_model::get_stock_details() in /home/wwwdream/public_html/uap/application/controllers/distribution.php on line 141
+[14-Mar-2014 08:39:10] PHP Parse error:  syntax error, unexpected T_STRING in /home/wwwdream/public_html/uapdesign/application/views/pages/admin.php on line 17
+[17-Mar-2014 04:13:24] PHP Fatal error:  Can't use method return value in write context in /home/wwwdream/public_html/uapdesign/application/models/role.php on line 14
+[17-Mar-2014 04:16:37] PHP Fatal error:  Can't use method return value in write context in /home/wwwdream/public_html/uapdesign/application/models/role.php on line 14
+[17-Mar-2014 04:17:52] PHP Fatal error:  Can't use method return value in write context in /home/wwwdream/public_html/uapdesign/application/models/role.php on line 10
+[17-Mar-2014 14:46:29] PHP Parse error:  syntax error, unexpected ';' in /home/wwwdream/public_html/uapdesign/application/controllers/reports.php on line 19

@@ -1,0 +1,41 @@
+<script> 
+$(document).ready(function(){
+	$("div").ready(function(){
+		$("#SubQuickPurchase").hide();
+		$("#SubQuickStock").hide();
+		$("#SubQuickReport").hide();
+	});
+  $("#quickPurchase").mouseenter(function(){
+    $("#SubQuickPurchase").slideDown("slow");
+	$("#subpurchase").slideUp("slow");
+	$("#quickPurchase").slideUp("slow");
+  });
+   $("#SubQuickPurchase").mouseleave(function(){
+	    $("#quickPurchase").slideDown("slow");
+		$("#subpurchase").slideDown("slow");
+		$("#SubQuickPurchase").slideUp("slow");
+		});
+  $("#quickStock").mouseenter(function(){
+    $("#SubQuickStock").slideDown("slow");
+	$("#subStock").slideUp("slow");
+	$("#quickStock").slideUp("slow");
+  });
+   $("#SubQuickStock").mouseleave(function(){
+	    $("#quickStock").slideDown("slow");
+		$("#subStock").slideDown("slow");
+		$("#SubQuickStock").slideUp("slow");
+		});
+  $("#quickReport").mouseenter(function(){
+    $("#SubQuickReport").slideDown("slow");
+	$("#subReport").slideUp("slow");
+	$("#quickReport").slideUp("slow");
+  });
+   $("#SubQuickReport").mouseleave(function(){
+	    $("#quickReport").slideDown("slow");
+		$("#subReport").slideDown("slow");
+		$("#SubQuickReport").slideUp("slow");
+		});
+
+  
+});
+</script>
