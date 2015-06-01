@@ -1,0 +1,319 @@
+<?php
+echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocomplete'=>'off'));
+ ?>
+	<table width="100%" cellspacing="0">
+		<tr>
+			<td colspan="3" style="text-align:center">
+
+				<p><?php echo $purchase_info['form_info']['name']; ?></p>
+				<h1>UNIVERSITY OF ASIA PACIFIC</h1>
+				<h4><?php echo $purchase_info['form_info']['description']; ?></h4>
+			</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td width="20%" class="lable">Deparment/ Section</td>
+			<td width="80%">
+				<?php echo $purchase_info['ds_id']; ?>
+				<input type="hidden" name="purchase_id" value="<?php echo $purchase_info['id']; ?>">
+			</td>
+
+		</tr>
+		<tr>
+			<td>2</td>
+			<td class="lable">Request for Advance</td>
+			<td>
+				<table width="100%" class="table_2">
+					<tr>
+						<td width="10%" class="lable">Taka</td>
+						<td width="40%" class="lable"><?php echo $purchase_info['advance_amount'] ?></td>
+						<td width="10%" class="lable">In favor of : </td>
+						<td width="40%" class="lable"><?php echo $purchase_info['advance_in_favour_of']; ?></td>	
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td width="20%" class="lable">Justifications (Write in detail, why, for whom & what purpose needed)</td>
+			<td width="80%">
+				<?php echo $purchase_info['justification'] ? $purchase_info['justification'] : "&nbsp; &nbsp;"; ?> 
+			</td>
+
+		</tr>
+		<tr>
+			<td>4</td>
+			<td class="lable">Budget head</td>
+			<td>
+				<table class="table_2">
+					<tr>
+						<td width="50%" class="lable"><?php echo $purchase_info['budget_head']; ?> </td>
+						<td width="10%" class="lable">Provision amount  </td>
+						<td width="40%" class="lable"><?php echo $purchase_info['provision_amount']; ?></td>	
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td width="20%" class="lable">If fund is short, from which head could be adjusted</td>
+			<td width="80%">
+				<?php echo $purchase_info['adjusted_budget_if_not'] ? $purchase_info['adjusted_budget_if_not'] : "&nbsp;&nbsp;"; ?> 
+			</td>
+
+		</tr>
+		<tr>
+			<td>6</td>
+			<td width="20%" class="lable">Date by which advance is required</td>
+			<td width="80%">
+					<?php echo $purchase_info['required_advance_date']; ?>
+			</td>
+
+		</tr>
+		<tr>
+			<td>7</td>
+			<td width="20%" class="lable">Estimated date by which advance will be settled</td>
+			<td width="80%">
+				<?php echo $purchase_info['advance_settle_date']; ?>
+				 
+			</td>
+
+		</tr>
+		<tr>
+			<td>8</td>
+			<td width="20%" class="lable">Remarks</td>
+			<td width="80%">
+				<?php echo $purchase_info['remarks']; ?>
+				 
+			</td>
+
+		</tr>
+		
+		<tr>
+			<td colspan="3" align="center">
+				<input type="submit" name="submit" value="Submit"/>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="3" align="center">
+				<h2>Actions</h2> 
+			</td>
+		</tr>
+
+	</table>
+	<br/><br/>
+	<table width="100%">
+		
+		<tr>
+			<td colspan="3" align="center">
+				<table border="1" cellspacing="1" cellpadding="1" width="100%">
+					<tr>
+						<th>#</th>
+						<th>Date</th>
+						<th>From</th>
+						<th>To</th>
+						<th>Action</th>
+						<th>Comments</th>
+						<th>Attachments</th>
+					</tr>
+					
+					<?php
+						foreach ($actions as $id => $flow) {
+							?>
+					<tr>
+						<td><?php echo $id+1 ?></td>
+						<td class="utcToLocal"><?php echo $flow['date'] ?></td>
+						<td><?php echo $flow['from'] ?></td>
+						<td><?php echo $flow['to'] ?></td>
+						<td><?php echo $flow['status_type'] ?></td>
+						<td><?php echo $flow['message'] ?></pre></td>
+						<td>
+							<?php 
+							$i = 0;
+							$atta= $flow['attachments'];
+							foreach ($atta as $item) {
+								$i++;
+								$url = "/uploads/".$item['file_name'];
+								$name = array_pop(explode("/", $url));
+								echo $i.". <a href='$url' target='_blank' >$name</a><br/>";
+							} ?>
+							&nbsp;
+						</td>
+					</tr>		
+							
+							<?php
+						}
+					?>
+				</table>
+			</td>
+		</tr>
+		
+		<?php if($mode=='process' && !$is_readonly){
+			?>
+
+		
+		
+		<tr>
+			<td colspan="3" align="center">
+				<h3>Your action</h3>
+			</td>
+		</tr>
+		<?php 
+			if($can_approve && !($purchase_info['purchase_status']==3 && $purchase_info['is_final_step'])){
+				?>
+				<tr>
+					<td colspan="3" align="center">
+						<input type="submit" name="process_action" value="approve"/>
+						<input type="submit" name="process_action" value="reject"/>
+					</td>
+				</tr
+				<tr>
+					<td colspan="3" align="center">
+						<h4>OR</h4>
+					</td>
+				</tr>	
+				
+				<?php
+			}
+
+		?>
+
+		<?php 
+			if(!($purchase_info['purchase_status']==3 && $purchase_info['is_final_step'])){
+				if($current_action != 8){
+				?>
+
+				
+
+		<tr>
+			<td width="20%" class="lable">Forward</td>
+			<td width="80%" colspan="2">
+				<select name="forward_id">
+					<?php 
+						foreach ($flow_list as $a) {
+							
+							?>
+
+							<option value="<?php echo $a['user_id'] ?>"><?php echo $a['name']; if(!empty($a['ds_name'])){echo "(".$a['ds_name'].")";}?></option>
+
+							<?php
+						}
+					?>
+				</select>
+			</td>
+		</tr>
+		<?php
+				}
+			}
+		?>
+		<!-- <tr>
+			<td width="20%" class="lable">Subject</td>
+			<td width="80%">
+				<input type="text" name="subject" />
+				<input type="hidden" name="current_flow" value="<?php echo $current_flow; ?>" />
+			</td>
+		</tr> -->
+		<tr>
+			<td width="20%" class="lable">Comment</td>
+			<td width="80%" colspan="2">
+				<textarea rows="5" name="comments"></textarea>
+				<input type="hidden" name="current_flow" value="<?php echo $current_flow; ?>" />
+				<?php 
+					if($current_action==8){
+						?>
+						<input type="hidden" name="forward_id" value="<?php echo $forward_id; ?>" />
+						<?php
+					}
+				?>
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="lable">Attachments</td>
+			<td width="80%" colspan="2">
+				<input type="file" name="attachments[]" /><br/>
+				<input type="file" name="attachments[]" /><br/>
+				<input type="file" name="attachments[]" /><br/>
+				<input type="file" name="attachments[]" /><br/>
+				<input type="file" name="attachments[]" /><br/>
+			</td>
+		</tr>
+		<?php 
+		if($current_action == 8){
+			?>
+			<tr>
+				<td colspan="3" align="center">
+					<button type="submit" name="process_action" value="work_order_issued">Work order issued</button>
+				</td>
+			</tr>
+
+			<?php	
+		}else if(!($purchase_info['purchase_status']==3 && $purchase_info['is_final_step'])){
+				?>
+
+		<tr>
+			<td colspan="3" align="center">
+				<input type="submit" name="process_action" value="Forward"/>
+			</td>
+		</tr>
+		<?php
+		}else{
+			?>
+			<tr>
+				<td colspan="3" align="center">
+					<button type="submit" name="process_action" value="issue_work_order">Issue work order</button>
+				</td>
+			</tr>	
+			<?php
+		}
+	} ?>
+
+		
+	</table>
+</form>
+<style type="text/css">
+	#form_1{
+  padding: 10px;
+}
+
+#form_1 > table{
+  border:#000 solid 1px;
+  border-right: 0;
+}
+
+
+
+#form_1 td{
+	border-bottom: #000 solid 1px;
+	border-right: #000 solid 1px;
+	padding: 3px;
+}
+
+#form_1 input[type=text],
+#form_1 textarea{
+	width: 100%;
+	border:none;
+	min-height: 30px;
+}
+
+#form_1 select{
+	padding: 8px 0;
+	width: 100%;
+}
+
+#form_1 input{
+	max-width: 300px;
+}
+
+#form_1 .table_2 td{
+	border:none;
+} 
+
+#add_more_btn{
+	background: #81D3F9;
+	color: #000;
+	padding: 5px;
+	border-radius: 5px;
+}
+</style>
+<script type="text/javascript" src="/assets/new_assets/js/formoid-metro-cyan.js"></script>

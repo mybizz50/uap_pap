@@ -48,18 +48,36 @@ class Purchase extends CI_Controller {
         
     }
 
-    public function category($cat = 1, $type = '') {
+    public function form($form_id = 1) {
         $this -> load -> model('purchase_model');
 		$this -> load -> model('department');
         $ret = $this -> purchase_model -> getDept($this -> session -> userdata('id'));
         $form_data = array(
-        	"purchase_cat" => $this -> purchase_model -> getPurchaseInfo($cat), 
+            "form_id"=>$form_id,
+        	"purchase_cat" => $this -> purchase_model -> getPurchaseInfo($form_id), 
         	"recommendations" => $this -> purchase_model -> getRecommendations(), 
         	"item_cats" => $this -> purchase_model -> getStockCategories(), 
         	"p_types" => $this -> purchase_model -> getPurchaseTypes(), 
         	"deptList" => $this->department->get_active_departments()
 		);
-        $this->generate_page('Purchase :: ' . $form_data['purchase_cat']['name'], array('purchase_form'=>$form_data));
+        $form_name;
+
+        switch ($form_id) {
+            case 1:
+                $form_name = 'form_b';
+                break;
+
+            case 2:
+                $form_name = 'form_b1';
+                break;    
+            case 4:
+                $form_name = 'form_d';
+                break;
+            default:
+                $form_name = "purchase_form";
+                break;
+        }
+        $this->generate_page('Purchase :: ' . $form_data['purchase_cat']['name'], array($form_name=>$form_data));
     }
 
     public function pop_array(array &$array, $key) {
@@ -229,7 +247,7 @@ class Purchase extends CI_Controller {
 
      function initiate_purchase(){
         if(!isset($_POST['submit'])){
-            $this->category();
+            $this->generate_page("Purchase :: 404 not found", array('alerts'=> array('type'=>'error','msg'=>'Page not found')));
             return;
         }
 		
@@ -242,6 +260,7 @@ class Purchase extends CI_Controller {
         $this->load->model('purchase_flow_model');
         $purchase_info = array(
                 "advance_amount"=>$this->input->post('advance_amount'),
+                "purchase_category"=>$this->input->post('purchase_category'),
                 "advance_in_favour_of"=>$this->input->post('advance_in_favour_of'),
                 "justification"=>$this->input->post('justification'),
                 "budget_head"=>$this->input->post('budget_head'),
@@ -253,6 +272,7 @@ class Purchase extends CI_Controller {
                 "payment_mode"=>$this->input->post('payment_method'),
                 "created_date"=>date("Y-m-d", strtotime('today')),
                 "ds_id"=>$this->input->post('ds_id'),
+                "remarks"=>$this->input->post('remakrs'),
                 "created_by"=>$this->session->userdata('id')
             );
 
@@ -289,13 +309,18 @@ class Purchase extends CI_Controller {
             }
             
             $items = $this->input->post('item');
-           // print_r($items);
-            foreach ($items as $item) {
-                $item["purchase_id"]=$purchase_id;
-                $item["date-purchase-non-functional"]=date("Y-m-d",strtotime($item["date-purchase-non-functional"] | "today"));
-                $item["date-last-purchase"]=date("Y-m-d",strtotime($item["date-last-purchase"] | "today"));
-                $this->purchase_model->insert_to_purchase_item_info($item);                
-            }
+
+           if($items){
+                foreach ($items as $item) {
+                    $item["purchase_id"]=$purchase_id;
+                    $item["date-purchase-non-functional"]=date("Y-m-d",strtotime($item["date-purchase-non-functional"] | "today"));
+                    $item["date-last-purchase"]=date("Y-m-d",strtotime($item["date-last-purchase"] | "today"));
+                    $item["item_name"]=$this->input->post('item_name');
+                    
+                    $this->purchase_model->insert_to_purchase_item_info($item);                
+                }
+           }
+            
 
         }
 
@@ -385,6 +410,7 @@ class Purchase extends CI_Controller {
         $purchase_record = $this->purchase_model->get_purchase_details($purchase_id);
 
         $purchase_info = array(
+                "form_info"=>$this -> purchase_model -> getPurchaseInfo($purchase_record['purchase_category']),
                 "id"=>$purchase_record['id'],
                 "advance_amount"=>$purchase_record['advance_amount'],
                 "advance_in_favour_of"=>$purchase_record['advance_in_favour_of'],
@@ -399,7 +425,8 @@ class Purchase extends CI_Controller {
                 "created_date"=>$purchase_record['created_date'],
                 "ds_id"=>$this->department->get_dept_name($purchase_record['ds_id']),
                 "is_final_step"=>$this->purchase_flow_model->get_final_destination() == $this->session->userdata('id') ? true : false,
-                "purchase_status"=>$purchase_record['purchase_status']
+                "purchase_status"=>$purchase_record['purchase_status'],
+                "remarks"=>$purchase_record['remarks']
             );
 
         //$this->print_a($purchase_info);
@@ -441,6 +468,8 @@ class Purchase extends CI_Controller {
             "mode"=>"process",
             "flow_list"=>$this->purchase_flow_model->get_purchase_flow_structure(),
             "can_approve"=>$this->can_user_approve(),
+            "can_edit"=>$this->can_user_edit(),
+            "can_verify"=>$this->can_user_verify(),
             "forward_list"=>array(),
             "back_list"=>array(),
             "current_action"=>$this->notification_model->get_current_action($id),
@@ -451,11 +480,33 @@ class Purchase extends CI_Controller {
 		
 		if($is_readonly){
 			$this->notification_model->mark_processed($id);
-		}	
-			
+		}
+
+        //$this->print_a($page_data);
+        
+        $view_form;
+	   
+        switch ($purchase_record['purchase_category']) {
+                case 1:
+                    $view_form = 'form_b_view.php';
+                    $page_data['step']=2;
+                    break;
+                case 2:
+                    $view_form = 'form_b1_view.php';
+                    break;
+                
+                case 4:
+                    $view_form = 'form_d_view.php';
+                    $page_data['step']=2;
+                    break;
+
+                default:
+                    $view_form = 'purchase_details_2.php';
+                    break;
+            }	
 
         $this->generate_page("Purchase :: process purchase",
-                array('purchase_details_2'=>$page_data));
+                array($view_form=>$page_data));
     }
 
 	public function can_user_approve(){
@@ -469,11 +520,80 @@ class Purchase extends CI_Controller {
 		
 		
 	}
+
+    public function can_user_edit(){
+        $this->load->model('users');
+        $this->load->model('purchase_flow_model');
+            
+        $user_id = $this->session->userdata('id');
+        $role_id = $this->users->get_role_by_id($user_id);
+        
+        return $this->purchase_flow_model->can_role_edit($role_id);
+        
+        
+    }
+
+    public function can_user_verify(){
+        $this->load->model('users');
+        $this->load->model('purchase_flow_model');
+            
+        $user_id = $this->session->userdata('id');
+        $role_id = $this->users->get_role_by_id($user_id);
+        
+        return $this->purchase_flow_model->can_role_verify($role_id);
+        
+        
+    }
 	
+
+    public function update_item_info(){
+        $this->load->model('purchase_flow_model');
+        $this->load->model('notification_model');
+        $this->load->model('purchase_model');
+        $this->load->model('role');
+        $this->load->model('users');
+        $this->load->model('department');
+        $this->load->model('stock_category');
+        $this->load->model('activity_log');
+
+        $update_data = $this->input->post();
+        $items = $update_data['item'];
+        $purchase_id = $update_data['purchase_id'];
+
+        $name = $this->users->get_full_name($this -> session -> userdata('id'));
+        $role_1= $this->users->get_role_name($this -> session -> userdata('role'));
+
+        foreach ($items as $id => $item_info) {
+            $this->purchase_model->update_item_info($purchase_id, $id, $item_info['unit'], $item_info['unit-price'], $item_info['payment_method']);    
+            $log_info = array(
+            "activity_type"=>2,
+            "executor"=>$this->session->userdata('id'),
+            "executed_to"=>$this->session->userdata('id'),
+            "description"=>"$name($role_1) updated item info purchase Id#$purchase_id item Id#".$id
+        );
+
+            $this->activity_log->add_log($log_info);
+
+        }
+        
+        
+
+        
+        
+
+        $this->generate_page("Purchase :: Updated successfully", array('alerts'=> array('type'=>'success','msg'=>'Item information updated')));
+
+        
+    }
 	
 	
 
     public function next_proecss(){
+        if(!empty($_POST['submit']) && $_POST['submit']=='Update'){
+            $this->update_item_info();
+            return;
+
+        }
         $this->load->model('purchase_flow_model');
         $this->load->model('notification_model');
         $this->load->model('purchase_model');
@@ -531,6 +651,18 @@ class Purchase extends CI_Controller {
 	        "description"=>"$name($role_1) $action. purchase Id#$purchase_id to $name_2($role_2)"
 	    );
 		
+
+        if($process_action=='verify'){
+            $log_info['activity_type']=56;
+            $log_info['description']="$name($role_1) verified and $action purchase Id#$purchase_id";
+
+            $flow_data["subject"]="verified";
+            $flow_data["status_type"]=18;
+
+            $notification_info["action"]=18;
+
+        
+        }
 		
 		
 		
@@ -720,6 +852,8 @@ class Purchase extends CI_Controller {
             "mode"=>"process",
             "flow_list"=>$this->purchase_flow_model->get_purchase_flow_structure(),
             "can_approve"=>$this->can_user_approve(),
+            "can_edit"=>$this->can_user_edit(),
+            "can_verify"=>$this->can_user_verify(),
             "forward_list"=>array(),
             "back_list"=>array(),
             "current_action"=>$this->notification_model->get_current_action($id),
@@ -727,8 +861,28 @@ class Purchase extends CI_Controller {
             );
 
 
+        $view_form;
+       
+        switch ($purchase_record['purchase_category']) {
+                case 1:
+                    $view_form = 'form_b_view.php';
+                    break;
+                case 2:
+                    $view_form = 'form_b1_view.php';
+                    break;
+                
+                case 4:
+                    $view_form = 'form_d_view.php';
+                    break;
+
+                default:
+                    $view_form = 'purchase_details_2.php';
+                    break;
+            }    
+
+
         $this->generate_page("Purchase :: process purchase",
-                array('purchase_details_2'=>$page_data));
+                array($view_form=>$page_data));
     }
 
     private function print_a($data){

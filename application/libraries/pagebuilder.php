@@ -72,6 +72,10 @@ class Pagebuilder {
             $msg .=" adjusted items in stock";
         }
 
+        if($notification['action']==18){
+            $msg .=" forwarded a purchase after verification";
+        }
+
         return $msg;
     }
 

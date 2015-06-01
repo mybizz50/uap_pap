@@ -15,6 +15,18 @@ function can_role_approve($id){
     $record = $query->result_array();
 	return count($record);
 }
+
+function can_role_verify($id){
+    $query = $this->db->get_where($this->db_structure,array('concerned_role'=>$id, 'can_verify'=>1));
+    $record = $query->result_array();
+    return count($record);
+}
+
+function can_role_edit($id){
+    $query = $this->db->get_where($this->db_structure,array('concerned_role'=>$id, 'can_edit'=>1));
+    $record = $query->result_array();
+    return count($record);
+}
    
 function get_purchase_flow_structure(){
 	$query = $this->db->query("SELECT users.id as user_id, role.name, departmentsection.ds_name FROM purchase_flow_structure LEFT JOIN users ON purchase_flow_structure.concerned_role = users.role_id LEFT JOIN user_profile ON user_profile.user_id = users.id LEFT JOIN departmentsection ON  user_profile.department = departmentsection.id LEFT JOIN role ON purchase_flow_structure.concerned_role = role.id WHERE purchase_flow_structure.id !=( SELECT MAX(id) FROM purchase_flow_structure )");

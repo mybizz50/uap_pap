@@ -85,6 +85,8 @@ class Purchase_model extends CI_Model {
         }
     }
 
+
+
     private function insert_inspection_report($data) {
         $this -> db -> insert('inspection_report', $data);
         $data = array('inspection_report_id' => ($this -> db -> affected_rows() != 1) ? '' : $this -> db -> insert_id(), );
@@ -251,6 +253,12 @@ class Purchase_model extends CI_Model {
         $query = $this -> db -> get_where('purchase_management_status_log', array('id' => $this -> get_log_id_from_notification_id($id)));
         $ret = $query -> result_array();
         return $ret[0]['purchase_id'];
+    }
+
+    public function update_item_info($purchase_id, $item_id, $unit, $unit_price, $payment_method){
+        $query_str = "UPDATE purchase_item_info SET unit=$unit, unit_price=$unit_price, payment_method='$payment_method' WHERE id=$item_id AND purchase_id=$purchase_id";
+        $query = $this->db->query($query_str);
+
     }
 
     

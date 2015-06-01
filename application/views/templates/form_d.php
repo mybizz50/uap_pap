@@ -3,14 +3,16 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
  ?>
 	<table width="100%" cellspacing="0">
 		<tr>
-			<td colspan="2" style="text-align:center">
+			<td colspan="3" style="text-align:center">
 
 				<p><?php echo $purchase_cat['name']; ?></p>
 				<h1>UNIVERSITY OF ASIA PACIFIC</h1>
 				<h4><?php echo $purchase_cat['description']; ?></h4>
+				<input type="hidden" name="purchase_category" value="4">
 			</td>
 		</tr>
 		<tr>
+			<td>1</td>
 			<td width="20%" class="lable">Deparment/ Section</td>
 			<td width="80%">
 				<select name="ds_id">
@@ -22,60 +24,15 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 
 		</tr>
 		<tr>
-			<td class="lable">Request for Advance</td>
-			<td>
-				<table width="100%" class="table_2">
-					<tr>
-						<td width="10%" class="lable">Taka</td>
-						<td width="40%" class="lable"><input class="large" type="text" name="advance_amount" /></td>
-						<td width="10%" class="lable">In favor of : </td>
-						<td width="40%" class="lable"><input class="large" type="text" name="advance_in_favour_of" /></td>	
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width="20%" class="lable">Justifications (Write in detail, why, for whom & what purpose needed)</td>
+			<td>2</td>
+			<td width="20%" class="lable">Name of the Item</td>
 			<td width="80%">
-				<textarea class="small" name="justification" cols="10" rows="3" ></textarea> 
+				<input class="large" type="text" name="item_name" /> 
 			</td>
 
 		</tr>
 		<tr>
-			<td class="lable">Budget head</td>
-			<td>
-				<table class="table_2">
-					<tr>
-						<td width="50%" class="lable"><input type="text" name="budget_head" /></td>
-						<td width="10%" class="lable">Provision amount  </td>
-						<td width="40%" class="lable"><input type="text" name="provision_amount" /></td>	
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width="20%" class="lable">If fund is short, from which head could be adjusted</td>
-			<td width="80%">
-				<input type="text" name="adjusted_budget_if_not" /> 
-			</td>
-
-		</tr>
-		<tr>
-			<td width="20%" class="lable">Date by which advance is required</td>
-			<td width="80%">
-					<input class="input-date" placeholder="dd-mm-yyyy" type="text" name="required_advance_date" /> 
-			</td>
-
-		</tr>
-		<tr>
-			<td width="20%" class="lable">Estimated date by which advance will be settled</td>
-			<td width="80%">
-				<input class="input-date" placeholder="dd-mm-yyyy" type="text" name="advance_settle_date" />
-				 
-			</td>
-
-		</tr>
-		<tr>
+			<td>3</td>
 			<td width="20%" class="lable">Specification in details</td>
 			<td width="80%">
 				<textarea class="small" name="specification" cols="10" rows="3" ></textarea> 
@@ -83,27 +40,34 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 
 		</tr>
 		<tr>
+			<td>4</td>
 			<td colspan="2" width="100%">
+
 				<table width="100%" class="table_2">
 					<tr>
 						<td>#</td>
 						<td>Type</td>
 						<td>Item category</td>
-						<td>Item name</td>
+						<td>Item code</td>
 						<td width="80px">Total unit</td>
 						<td width="80px">Unit name</td>
 						<td>Unit price</td>
 						<td>Total price</td>
-						<td>#</td>
+						<td>Payment method</td>
 					</tr>
 					<tr class="purchaseItemList">
-						<td colspan="4" align="center"><a href="#" id="add_more_btn" onclick="addNewRow(); return false;">Add more</a></td>
+						<td colspan="4" align="center">&nbsp;</td>
 						<td colspan="3">Sub total</td>
 						<td><input type="text" class="sub_total_pice"></td>
 						
 					</tr>
 					<script type="text/javascript" src="/assets/js/jquery.datetimepicker.js"></script>
 					<script type="text/javascript">
+						function randId(){
+							var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+							return randLetter + Date.now();
+						}
+					
 						var replacementItem = 0;
 						var newItem = 0;
 						var types = ["New","Replace"];
@@ -132,8 +96,8 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 						function rowTypeChange(){
 							var type = $(this).find('option:selected').text();
 							var id = $(this).closest('tr').attr('data-id');
-							var purpose = $('<tr class="purpose_row" data-for="'+id+'"><td width="20%">Item '+id+'. </td><td width="80%"><input type="text" name="item['+id+'][purpose]"></td></tr>');
-							var det = $('<tr class="replacement_info_row" data-for="'+id+'"><td>'+id+'</td><td><input class="input-date" type="text" name="item['+id+'][date-purchase]"></td><td><input type="text" name="item['+id+'][certified_by]"></td>purpose_purcase_replaced<td><input type="text" name="item['+id+'][prev_item_storing_place]"></td></tr>');
+							var purpose = $('<tr class="purpose_row" data-for="'+id+'"><td width="80%"><input type="text" name="item['+id+'][purpose]"></td></tr>');
+							var det = $('<tr class="replacement_info_row" data-for="'+id+'"><td><input class="input-date" type="text" name="item['+id+'][date-purchase]"></td><td><input type="text" name="item['+id+'][certified_by]"></td>purpose_purcase_replaced<td><input type="text" name="item['+id+'][prev_item_storing_place]"></td></tr>');
 							
 							det.find(".input-date").datetimepicker({
 								timepicker:false,
@@ -212,8 +176,9 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 							}
 
 						var ip_1 = $('<input>')
-									.attr('name','item['+replacementItem+'][item_name]')
-									.attr('type','text');
+									.attr('name','item['+replacementItem+'][item_code]')
+									.attr('type','text')
+									.val(randId());
 
 						var ip_2 = $('<input>')
 									.attr('name','item['+replacementItem+'][unit]')
@@ -237,11 +202,9 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 									.attr('type','text')
 									.addClass('total_price');
 
-						var dlt = $('<a>')
-									.text('X')
-									.addClass('delete_row')
-									.attr('data-id',replacementItem)
-									.click(delete_row);															
+						var dlt = '<input type="radio" name="item['+replacementItem+'][payment_method]" value="cheque" checked="checked"> Cheque<br/><input type="radio" name="item['+replacementItem+'][payment_method]" value="cash"> Cash';
+						console.log(dlt);
+																								
 
 						tr.append(td_1)
 						  .append($('<td>').append(sl_2))
@@ -253,10 +216,10 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 						  .append($('<td>').append(ip_5))
 						  .append($('<td>').append(dlt));
 						  
-						var purpose = $('<tr class="purpose_row" data-for="'+replacementItem+'"><td width="20%">Item '+replacementItem+'. </td><td width="80%"><input type="text" name="item['+replacementItem+'][purpose]"></td></tr>');  
+						var purpose = $('<tr class="purpose_row" data-for="'+replacementItem+'"><td width="80%"><input type="text" name="item['+replacementItem+'][purpose]"></td></tr>');  
 						
-						var existing = $('<tr class="existing_quantity_row" data-for="'+replacementItem+'"><td>'+replacementItem+'</td><td><input type="text" name="item['+replacementItem+'][total_existing_functional_quantity]"></td><td><input type="text" name="item['+replacementItem+'][total_existing_nonFunctional_quantity]"></td><td><input type="text" class="input-date"  name="item['+replacementItem+'][date-purchase-non-functional]"></td></tr>');
-						var last_purchase = $('<tr class="last_purchase_row" data-for="'+replacementItem+'"><td>'+replacementItem+'</td><td><input type="text" class="input-date" name="item['+replacementItem+'][date-last-purchase]"></td><td><input type="text" name="item['+replacementItem+'][quantity-last-purchase]"></td><td><input type="text" name="item['+replacementItem+'][price-last-purchase]"></td></tr>');
+						var existing = $('<tr class="existing_quantity_row" data-for="'+replacementItem+'"><td><input type="text" name="item['+replacementItem+'][total_existing_functional_quantity]"></td><td><input type="text" name="item['+replacementItem+'][total_existing_nonFunctional_quantity]"></td><td><input type="text" class="input-date"  name="item['+replacementItem+'][date-purchase-non-functional]"></td></tr>');
+						var last_purchase = $('<tr class="last_purchase_row" data-for="'+replacementItem+'"><td><input type="text" class="input-date" name="item['+replacementItem+'][date-last-purchase]"></td><td><input type="text" name="item['+replacementItem+'][quantity-last-purchase]"></td><td><input type="text" name="item['+replacementItem+'][price-last-purchase]"></td></tr>');
 						existing.find(".input-date").datetimepicker({
 							timepicker:false,
  							format:'d-m-Y'
@@ -286,26 +249,37 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 				</table>
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="20%" class="lable">Payment method</td>
+			<td>5</td>
+			<td width="20%" class="lable">Justifications (Write in detail, why, for whom & what purpose needed)</td>
 			<td width="80%">
-				<input type="radio" name="payment_method" value="cheque" checked="checked"> Cheque 
-				<input type="radio" name="payment_method" value="cash"> Cash  
+				<textarea class="small" name="justification" cols="10" rows="3" ></textarea> 
 			</td>
+
 		</tr>
 		<tr>
-			<td width="20%" class="lable">Attach quotation</td>
-			<td width="80%">
-				<input type="file" name="attachment-quotation[]" multiple> 
+			<td>6</td>
+			<td colspan="2">
+				<table style="border:none">
+					<tr>
+						<td class="lable" style="border:none">Attach quotation</td>
+						<td style="border:none">
+							<input type="file" name="attachment-quotation[]" multiple> 
+						</td>
+					</tr>
+					<tr>	
+						<td style="border:none" class="lable">Attach comparative statement</td>
+						<td style="border:none">
+							<input type="file" name="attachment-comparative-statement[]" multiple> 
+						</td>
+					</tr>
+				</table>
 			</td>
+			
 		</tr>
 		<tr>
-			<td width="20%" class="lable">Attach comparative statement</td>
-			<td width="80%">
-				<input type="file" name="attachment-comparative-statement[]" multiple> 
-			</td>
-		</tr>
-		<tr>
+			<td>7</td>
 			<td width="20%" class="lable">Purpose of purchase</td>
 			<td width="80%" >
 				<table width="100%">
@@ -332,11 +306,11 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 		</tr>
 
 		<tr>
+			<td>8</td>
 			<td width="20%" class="lable">If replacement</td>
 			<td width="80%">
 				<table width="100%" cellpadding="2" border="0" cellspacing="0">
 					<tr>
-						<td>For item</td>
 						<td>Date of purchase</td>
 						<td>Certified by</td>
 						<td>Storing place of <br/>previous item</td>
@@ -347,12 +321,13 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 				</table>
 			</td>
 		</tr>
+
 		<tr>
+			<td>9</td>
 			<td width="20%" class="lable">Totial existing quantity</td>
 			<td width="80%">
 				<table width="100%">
 					<tr class="existing_quantity_row_1">
-						<td>For Item</td>
 						<td>Existing quantity</td>
 						<td>Non-existing quantity</td>
 						<td>Date of purchase</td>
@@ -363,11 +338,11 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 			</td>
 		</tr>
 		<tr>
+			<td>10</td>
 			<td width="20%" class="lable">Last purchase</td>
 			<td width="80%">
 				<table width="100%">
 					<tr class="last_purchase_row_1">
-						<td>For Item</td>
 						<td>Date</td>
 						<td>Quantity</td>
 						<td>Rate</td>
@@ -377,8 +352,32 @@ echo form_open_multipart('purchase/initiate_purchase', array('id'=>'form_1', 'au
 				</table>
 			</td>
 		</tr>
+		
 		<tr>
-			<td colspan="2" align="center">
+			<td>11</td>
+			<td class="lable">Budget head</td>
+			<td>
+				<table class="table_2">
+					<tr>
+						<td width="50%" class="lable"><input type="text" name="budget_head" /></td>
+						<td width="10%" class="lable">Provision amount  </td>
+						<td width="40%" class="lable"><input type="text" name="provision_amount" /></td>	
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td width="20%" class="lable">If fund is short, from which head could be adjusted</td>
+			<td width="80%">
+				<input type="text" name="adjusted_budget_if_not" /> 
+			</td>
+
+		</tr>
+		
+		
+		<tr>
+			<td colspan="3" align="center">
 				<input type="submit" name="submit" value="Submit"/>
 			</td>
 		</tr>

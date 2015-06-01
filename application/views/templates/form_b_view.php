@@ -3,22 +3,24 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
  ?>
 	<table width="100%" cellspacing="0">
 		<tr>
-			<td colspan="2" style="text-align:center">
-		
-				<p><?php echo $purchase_info['form_info']['name'] || $purchase_info['form_info']['iteam_code']; ?></p>
+			<td colspan="3" style="text-align:center">
+
+				<p><?php echo $purchase_info['form_info']['name']; ?></p>
 				<h1>UNIVERSITY OF ASIA PACIFIC</h1>
 				<h4><?php echo $purchase_info['form_info']['description']; ?></h4>
 			</td>
 		</tr>
 		<tr>
+			<td>1</td>
 			<td width="20%" class="lable">Deparment/ Section</td>
 			<td width="80%">
 				<?php echo $purchase_info['ds_id']; ?>
 				<input type="hidden" name="purchase_id" value="<?php echo $purchase_info['id']; ?>"> 
 			</td>
 
-		</tr> 
+		</tr>
 		<tr>
+			<td>2</td>
 			<td class="lable">Request for Advance</td>
 			<td>
 				<table width="100%" class="table_2">
@@ -32,6 +34,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 			</td>
 		</tr>
 		<tr>
+			<td>3</td>
 			<td width="20%" class="lable">Justifications (Write in detail, why, for whom & what purpose needed)</td>
 			<td width="80%">
 				<?php echo $purchase_info['justification'] ? $purchase_info['justification'] : "&nbsp; &nbsp;"; ?> 
@@ -39,6 +42,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 		</tr>
 		<tr>
+			<td>4</td>
 			<td class="lable">Budget head</td>
 			<td>
 				<table class="table_2">
@@ -51,6 +55,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 			</td>
 		</tr>
 		<tr>
+			<td>5</td>
 			<td width="20%" class="lable">If fund is short, from which head could be adjusted</td>
 			<td width="80%">
 				<?php echo $purchase_info['adjusted_budget_if_not'] ? $purchase_info['adjusted_budget_if_not'] : "&nbsp;&nbsp;"; ?> 
@@ -58,6 +63,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 		</tr>
 		<tr>
+			<td>6</td>
 			<td width="20%" class="lable">Date by which advance is required</td>
 			<td width="80%">
 					<?php echo $purchase_info['required_advance_date']; ?>
@@ -65,6 +71,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 		</tr>
 		<tr>
+			<td>7</td>
 			<td width="20%" class="lable">Estimated date by which advance will be settled</td>
 			<td width="80%">
 				<?php echo $purchase_info['advance_settle_date']; ?>
@@ -73,6 +80,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 		</tr>
 		<tr>
+			<td>8</td>
 			<td width="20%" class="lable">Specification in details</td>
 			<td width="80%">
 				<?php echo $purchase_info['specification'] ? $purchase_info['specification'] : "&nbsp;&nbsp;" ?>
@@ -80,17 +88,20 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 		</tr>
 		<tr>
+			<td>9</td>
 			<td colspan="2" width="100%">
+
 				<table width="100%" class="table_2">
 					<tr>
 						<td>#</td>
 						<td>Type</td>
 						<td>Item category</td>
-						<td>Item name</td>
+						<td>Item code</td>
 						<td width="80px">Total unit</td>
 						<td width="80px">Unit name</td>
 						<td>Unit price</td>
 						<td>Total price</td>
+						<td>Payment mode</td>
 					</tr>
 
 					<?php 
@@ -103,42 +114,58 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 							<td><?php echo $i++; ?></td>
 							<td><?php echo $item['item_type']; ?></td>
 							<td><?php echo $item['item_cat']; ?></td>
-							<td><?php echo $item['item_name']; ?></td>
+							<td><?php echo $item['item_code']; ?></td>
 							<td>
-								<?php echo $item['unit']; 
-								if($step==2){
+								<?php  
+								if($can_edit){
 									?>
 
 
 								
-								<input type="text" name="item[<?php echo $item['id']; ?>][approved-unit]" placeholder="Update unit">
+								<input type="text" name="item[<?php echo $item['id']; ?>][unit]" value="<?php echo $item['unit']; ?>">
 							<?php
+								}else{
+									echo $item['unit'];
 								}
 								?>
 							</td>
 							<td><?php echo $item['unit_name']; ?></td>
-							<td><?php echo $item['unit_price']; 
-							if($step==2){
+							<td><?php  
+							if($can_edit){
 									?>
 
-								<input type="text" name="item[<?php echo $item['id']; ?>][approved-unit-price]" placeholder="Update unit price">	
+								<input type="hidden" name="item[<?php echo $item['id']; ?>][item_id]" value="<?php echo $item['id']; ?>">	
+		
+								<input type="text" name="item[<?php echo $item['id']; ?>][unit-price]" value="<?php echo $item['unit_price']; ?>">	
 							<?php
+								}else{
+									echo $item['unit_price'];
 								}
 								?>
 
 							</td>
 							<td>
-								<?php echo $item['unit']*$item['unit_price']; 
+								<?php echo $item['unit']*$item['unit_price'];?>
 
-															if($step==2){
-									?>
+							</td>
+							<td>
+								<?php 
+									if($can_edit){
+										$method = $item['payment_method'];
+
+										?>
 
 
-								<input type="text" placeholder="Updated total">
-							<?php
-								}
+										<input type="radio" name="item[<?php echo $item['id']; ?>][payment_method]" value="cheque"  <?php if($method=="cheque"){echo "checked=\"checked\""; } ?>> Cheque<br/>
+										<input type="radio" name="item[<?php echo $item['id']; ?>][payment_method]" value="cash" <?php if($method=="cash"){echo "checked=\"checked\""; } ?>> Cash
+
+										<?php
+
+									}else{
+										echo $item['payment_method'];	
+									}
+									
 								?>
-
 							</td>
 							
 						</tr>
@@ -146,23 +173,13 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 						$sub_total += $item['unit']*$item['unit_price'];
 					}
 					?>
-					<tr class="purchaseItemList">
-						<td colspan="4" align="center">&nbsp;</td>
-						<td colspan="3">Sub total</td>
-						<td><?php echo $sub_total; ?></td>	
-					</tr>
 					
 					
 				</table>
 			</td>
 		</tr>
 		<tr>
-			<td width="20%" class="lable">Payment method</td>
-			<td width="80%">
-				<?php echo $purchase_info['payment_mode'];?>   
-			</td>
-		</tr>
-		<tr>
+			<td>10</td>
 			<td width="20%" class="lable">Attach quotation</td>
 			<td width="80%">
 				<?php 
@@ -176,10 +193,11 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 						echo $i.". <a href='$url' target='_blank' >$name</a><br/>";
 					}
 				} ?>
-				&nbsp; 
+				&nbsp;  
 			</td>
 		</tr>
 		<tr>
+			<td>11</td>
 			<td width="20%" class="lable">Attach comparative statement</td>
 			<td width="80%">
 				<?php 
@@ -193,10 +211,11 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 						echo $i.". <a href='$url' target='_blank' >$name</a><br/>";
 					}
 				} ?>
-				&nbsp; 
+				&nbsp;  
 			</td>
 		</tr>
 		<tr>
+			<td>12</td>
 			<td width="20%" class="lable">Purpose of purchase</td>
 			<td width="80%" >
 				<table width="100%">
@@ -215,14 +234,12 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 										}
 										?>
 										<tr data-for="1" class="purpose_row">
-											<td width="20%">Item <?php echo $i ?>. </td>
 											<td width="80%"><?php echo $item['purpose']; ?></td>
 										</tr>
 										<?php
-				
+
 									}
 									?>
-					
 							</table>	
 						
 						</td>
@@ -237,19 +254,17 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 									$i = 0;
 									foreach ($items as $item) {
 										$i++;
-										if($item['item_type']=="New"){
+										if($item['item_type']!="Replacement"){
 											continue;
 										}
 										?>
 										<tr data-for="1" class="purpose_row">
-											<td width="20%">Item <?php echo $i ?>. </td>
 											<td width="80%"><?php echo $item['purpose']; ?></td>
 										</tr>
 										<?php
-				
+
 									}
 									?>
-					
 							</table>	
 						
 						</td>
@@ -257,13 +272,12 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 				</table>
 			</td>
 		</tr>
-
 		<tr>
+			<td>13</td>
 			<td width="20%" class="lable">If replacement</td>
 			<td width="80%">
 				<table width="100%" cellpadding="2" border="0" cellspacing="0">
 					<tr>
-						<td>For item</td>
 						<td>Date of purchase</td>
 						<td>Certified by</td>
 						<td>Storing place of <br/>previous item</td>
@@ -279,7 +293,6 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 						}
 						?>
 						<tr class="replacement_info_row">
-							<td><?php echo $i; ?>&nbsp;</td>
 							<td><?php echo $item['date-purchase']; ?>&nbsp;</td>
 							<td><?php echo $item['certified_by']; ?>&nbsp;</td>
 							<td><?php echo $item['prev_item_storing_place']; ?>&nbsp;</td>
@@ -288,17 +301,16 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 					}
 					?>
-					
-					<tr class="replacement_info"></tr> 
+					 
 				</table>
-			</td>
+			</td>	
 		</tr>
 		<tr>
+			<td>14</td>
 			<td width="20%" class="lable">Totial existing quantity</td>
 			<td width="80%">
 				<table width="100%">
 					<tr class="existing_quantity_row_1">
-						<td>For Item</td>
 						<td>Existing quantity</td>
 						<td>Non-existing quantity</td>
 						<td>Date of purchase</td>
@@ -312,7 +324,6 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 						$i++;
 						?>
 						<tr data-for="1" class="existing_quantity_row">
-							<td><?php echo $i; ?>&nbsp;</td>
 							<td><?php echo $item['total_existing_functional_quantity']; ?>&nbsp;</td>
 							<td><?php echo $item['total_existing_nonFunctional_quantity']; ?>&nbsp;</td>
 							<td><?php echo $item['date-purchase-non-functional']; ?>&nbsp;</td>
@@ -321,16 +332,16 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 					}
 					?>
-					
+
 				</table>
 			</td>
 		</tr>
 		<tr>
+			<td>15</td>
 			<td width="20%" class="lable">Last purchase</td>
 			<td width="80%">
 				<table width="100%">
 					<tr class="last_purchase_row_1">
-						<td>For Item</td>
 						<td>Date</td>
 						<td>Quantity</td>
 						<td>Rate</td>
@@ -344,7 +355,6 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 						$i++;
 						?>
 						<tr data-for="1" class="last_purchase_row">
-							<td><?php echo $i; ?>&nbsp;</td>
 							<td><?php echo $item['date-last-purchase']; ?>&nbsp;</td>
 							<td><?php echo $item['quantity-last-purchase']; ?>&nbsp;</td>
 							<td><?php echo $item['price-last-purchase']; ?>&nbsp;</td>
@@ -358,14 +368,27 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 				</table>
 			</td>
 		</tr>
+		<?php if($can_edit){
+			?>
+			<tr>
+				<td colspan="3" align="center">
+					<button type="submit" name="submit" value="Update">Update</button>
+				</td>
+			</tr>
+			<?php
+		} ?>
+	</table>
+	<br/><br/>
+	<table width="100%">
+
 		<tr>
-			<td colspan="2" align="center">
+			<td colspan="3" align="center">
 				<h2>Actions</h2> 
 			</td>
 		</tr>
 		
 		<tr>
-			<td colspan="2" align="center">
+			<td colspan="3" align="center">
 				<table border="1" cellspacing="1" cellpadding="1" width="100%">
 					<tr>
 						<th>#</th>
@@ -414,7 +437,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 		
 		
 		<tr>
-			<td colspan="2" align="center">
+			<td colspan="3" align="center">
 				<h3>Your action</h3>
 			</td>
 		</tr>
@@ -422,13 +445,13 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 			if($can_approve && !($purchase_info['purchase_status']==3 && $purchase_info['is_final_step'])){
 				?>
 				<tr>
-					<td colspan="2" align="center">
+					<td colspan="3" align="center">
 						<input type="submit" name="process_action" value="approve"/>
 						<input type="submit" name="process_action" value="reject"/>
 					</td>
 				</tr
 				<tr>
-					<td colspan="2" align="center">
+					<td colspan="3" align="center">
 						<h4>OR</h4>
 					</td>
 				</tr>	
@@ -447,7 +470,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 
 		<tr>
 			<td width="20%" class="lable">Forward</td>
-			<td width="80%">
+			<td width="80%" colspan="2">
 				<select name="forward_id">
 					<?php 
 						foreach ($flow_list as $a) {
@@ -475,7 +498,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 		</tr> -->
 		<tr>
 			<td width="20%" class="lable">Comment</td>
-			<td width="80%">
+			<td width="80%" colspan="2">
 				<textarea rows="5" name="comments"></textarea>
 				<input type="hidden" name="current_flow" value="<?php echo $current_flow; ?>" />
 				<?php 
@@ -489,7 +512,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 		</tr>
 		<tr>
 			<td width="20%" class="lable">Attachments</td>
-			<td width="80%">
+			<td width="80%" colspan="2">
 				<input type="file" name="attachments[]" /><br/>
 				<input type="file" name="attachments[]" /><br/>
 				<input type="file" name="attachments[]" /><br/>
@@ -501,7 +524,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 		if($current_action == 8){
 			?>
 			<tr>
-				<td colspan="2" align="center">
+				<td colspan="3" align="center">
 					<button type="submit" name="process_action" value="work_order_issued">Work order issued</button>
 				</td>
 			</tr>
@@ -511,7 +534,7 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 				?>
 
 		<tr>
-			<td colspan="2" align="center">
+			<td colspan="3" align="center">
 				<input type="submit" name="process_action" value="Forward"/>
 			</td>
 		</tr>
@@ -519,15 +542,13 @@ echo form_open_multipart('purchase/next_proecss', array('id'=>'form_1', 'autocom
 		}else{
 			?>
 			<tr>
-				<td colspan="2" align="center">
+				<td colspan="3" align="center">
 					<button type="submit" name="process_action" value="issue_work_order">Issue work order</button>
 				</td>
 			</tr>	
 			<?php
 		}
 	} ?>
-
-		
 	</table>
 </form>
 <style type="text/css">

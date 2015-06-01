@@ -24,21 +24,27 @@
                 <li class="has-sub" id="side_1">
                     <a href="#"><span>Purchase</span></a>
                     <ul id="side_nav">
-                        <li id="side_sub_1">
+                        <!-- <li id="side_sub_1">
                             <a href='<?php echo base_url(); ?>index.php/purchase/category/1'><span><img src="/assets/new_assets/images/1.png" width="14" height="12" /> General Purpose</span></a>
-                        </li>
+                        </li> -->
                         <li id="side_sub_12">
-                            <a href='#'><span><img src="/assets/new_assets/images/1.png" width="14" height="12" /> Purchase Through Advance</span></a>
+                            <a href='#'><span><img src="/assets/new_assets/images/1.png" width="14" height="12" /> Purchase initiate</span></a>
                             <ul class="triangle-isosceles left">
                                 <li >
-                                    <a href="<?php echo base_url(); ?>index.php/purchase/category/2/advance"> Advance</a>
+                                    <a href="<?php echo base_url(); ?>index.php/purchase/form/1"> Form B</a>
                                 </li>
                                 <li >
-                                    <a href="<?php echo base_url(); ?>index.php/purchase/category/2/requisition"> Requisition</a>
+                                    <a href="<?php echo base_url(); ?>index.php/purchase/form/2"> Form B1</a>
+                                </li>
+                                <!-- <li >
+                                    <a href="<?php echo base_url(); ?>index.php/purchase/form/3"> Form C</a>
+                                </li> -->
+                                <li >
+                                    <a href="<?php echo base_url(); ?>index.php/purchase/form/4"> Form D</a>
                                 </li>
                             </ul>
                         </li>
-                        <li id="side_sub_13">
+                        <!-- <li id="side_sub_13">
                             <a href='<?php echo base_url(); ?>index.php/purchase'><span><img src="/assets/new_assets/images/1.png" width="14" height="12" /> Purchase Through Administrative Approval</span></a>
                             <ul class="triangle-isosceles left">
                                 <li >
@@ -51,7 +57,7 @@
                                     <a href="<?php echo base_url(); ?>index.php/purchase/category/5"> Above TK. 2,00,000 - up to TK. 10,00,000</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li id="side_sub_2">
                             <a href='<?php echo base_url(); ?>index.php/purchase/purchase_list'><span><img src="/assets/new_assets/images/1.png" width="14" height="12" /> Purchases</span></a>
                         </li>
@@ -139,7 +145,7 @@
 
                 <?php if(!empty($access['stock_mod_access'])){?> 
                     
-                <li class="has-sub" id="side_3">
+                <!-- <li class="has-sub" id="side_3">
                     <a href='#'><span>Stock</span></a>
                     <ul>
                         <li id="side_sub_7">
@@ -149,11 +155,11 @@
                             <a href='<?php echo base_url(); ?>index.php/stock/stock_list'><img src="/assets/new_assets/images/1.png" width="14" height="12" /> Stock List</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <?php } ?>
                 <?php if(!empty($access['admin_mod_access'])){?> 
 
-                
+                <!-- 
                 <li class="has-sub" id="side_5">
 					<a href='#'><span>Distribution</span></a>
 					<ul>
@@ -165,13 +171,13 @@
 						</li>
 					</ul>
 				</li>
-                <?php } ?>
+ -->                <?php } ?>
                 
-                <li class="has-sub" id="side_77">
+                <!-- <li class="has-sub" id="side_77">
                     <a href='<?php echo base_url(); ?>index.php/stock_management/current_stock_list/'><span>Wastage management</span></a>
                     
                 </li>
-
+ -->
                 <?php if(!empty($access['admin_mod_access'])){?> 
 
                 <li class="has-sub" id="side_4">
